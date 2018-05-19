@@ -4,7 +4,7 @@ Exports a function to create an instance of URLShortener app.
 
 import os
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_mongoengine import MongoEngine
 
 def create_app(testing=False):
@@ -34,5 +34,26 @@ def create_app(testing=False):
 
     # connect to database
     MongoEngine(app)
+
+    # disable strict trailing slashes
+    app.url_map.strict_slashes = False
+
+    # register blueprints
+    from .blueprints.home import home
+    app.register_blueprint(home)
+
+    # attach 404 error handler
+    @app.errorhandler(404)
+    def handle_404(error):
+        return render_template("404.html", error=error), 404
+
+    # disable caching when debugging
+    if app.debug:
+        @app.after_request
+        def after_request(response):
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+            response.headers["Expires"] = 0
+            response.headers["Pragma"] = "no-cache"
+            return response
 
     return app

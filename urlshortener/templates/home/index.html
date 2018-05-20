@@ -1,7 +1,22 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <h1>
-    Working on it
-  </h1>
+  <h1>URL Shortener</h1>
+  <h2>Example creation usage:</h2>
+  <pre>
+    {{request.base_url}}new/https://www.google.com
+    {{request.base_url}}new/http://foo.com:80
+  </pre>
+  <h2>Example creation output</h2>
+  <pre>
+    { "original_url":"http://foo.com:80", "short_url":"{{request.base_url}}8170" }
+  </pre>
+  <h2>Usage:</h2>
+  <pre>
+      {{request.base_url}}2871
+  </pre>
+  <h2>Will redirect to:</h2>
+  <pre>
+    https://www.google.com/
+  </pre>
 {% endblock %}

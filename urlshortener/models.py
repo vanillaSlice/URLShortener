@@ -2,9 +2,10 @@
 Exports URLShortener app data models.
 """
 
-from mongoengine import Document, URLField
+from mongoengine import Document, SequenceField, URLField
 
 class URLEntry(Document):
-    url = URLField(required=True)
+    _id = URLField(required=True)
+    sequence = SequenceField()
 
     meta = {"collection": "url_map"}

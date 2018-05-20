@@ -58,3 +58,14 @@ Then point your browser to [localhost:5000](http://localhost:5000).
 ```
 python -m unittest
 ```
+
+## Docker
+Build the image:
+```
+docker build -t urlshortener .
+```
+
+Run the container:
+```
+docker run urlshortener
+```

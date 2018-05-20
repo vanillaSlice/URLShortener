@@ -7,7 +7,7 @@ import os
 from flask import Flask, render_template
 from flask_mongoengine import MongoEngine
 
-def create_app(testing=False):
+def create_app(testing=False):    
     app = Flask(__name__, instance_relative_config=True)
 
     if testing:
@@ -39,7 +39,7 @@ def create_app(testing=False):
     app.url_map.strict_slashes = False
 
     # register blueprints
-    from .blueprints.home import home
+    from .blueprints import home
     app.register_blueprint(home)
 
     # attach 404 error handler

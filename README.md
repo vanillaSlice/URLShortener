@@ -1,5 +1,5 @@
 # URL Shortener
-A simple URL shortener built with [Flask](http://flask.pocoo.org/) and [MongoDB](https://www.mongodb.com/). A deployed version can be viewed [here](https://peaceful-forest-38343.herokuapp.com/).
+A simple URL shortener built with [Flask](http://flask.pocoo.org/) and [MongoDB](https://www.mongodb.com/). A deployed version can be viewed [here](https://sliceurl.herokuapp.com/).
 
 ## Getting Started
 Install [virtualenv](https://virtualenv.pypa.io/en/stable/#) to create an isolated environment by running:
@@ -53,11 +53,6 @@ To change these properties you can export them as environment variables or creat
 python run.py
 ```
 Then point your browser to [localhost:5000](http://localhost:5000).
-
-## Testing
-```
-python -m unittest
-```
 
 ## Docker
 Build the image:

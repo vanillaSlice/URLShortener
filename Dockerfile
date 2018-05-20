@@ -13,4 +13,4 @@ COPY . /opt/URLShortener/
 
 # Run the app            
 WORKDIR /opt/URLShortener
-CMD gunicorn run:APP --log-file -
+CMD gunicorn run:app --log-file -

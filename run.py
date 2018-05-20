@@ -6,7 +6,7 @@ the Flask development server will start running the app on
 
 from urlshortener import create_app
 
-APP = create_app()
+app = create_app()
 
 if __name__ == "__main__":
-    APP.run()
+    app.run()

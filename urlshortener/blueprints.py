@@ -12,11 +12,7 @@ home = Blueprint("home", __name__, url_prefix="/")
 
 @home.route("/")
 def index():
-    if current_app.config.get("SSL"):
-        app_url = request.url.replace("http://", "https://")
-    else:
-        app_url = request.url
-    return render_template("home.html", app_url=app_url)
+    return render_template("home.html", app_url=get_app_url())
 
 @home.route("/new/<path:url>")
 def new_url(url):
@@ -27,7 +23,7 @@ def new_url(url):
             entry = URLEntry(url).save()
         except ValidationError:
             return jsonify({"error": "invalid url"}), 400
-    return jsonify({"original_url": url, "short_url": request.host_url + str(entry.sequence)}), 200
+    return jsonify({"original_url": url, "short_url": get_app_url() + str(entry.sequence)}), 200
 
 @home.route("/<sequence>")
 def go_to_url(sequence):
@@ -35,3 +31,9 @@ def go_to_url(sequence):
         return redirect(URLEntry.objects.get(sequence=sequence)._id)
     except Exception:
         return jsonify({"error": "url does not exist in the database"}), 400
+
+def get_app_url():
+    if current_app.config.get("SSL"):
+        return request.host_url.replace("http://", "https://")
+    else:
+        return request.host_url

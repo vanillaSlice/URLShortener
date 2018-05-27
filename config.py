@@ -1,5 +1,5 @@
 """
-Contains default and test config properties. To add local instance
+Contains default config properties. To add local instance
 config properties create a file 'instance/config.py' or export the
 properties as environment variables (note that environment variables
 will take precedence).
@@ -16,7 +16,3 @@ class Default(object):
     MONGODB_USERNAME = ""
     MONGODB_PASSWORD = ""
     SSL = False
-
-class Test(Default):
-    """Test config properties."""
-    MONGODB_DB = "urlshortener_test"

@@ -43,6 +43,7 @@ The following properties can be configured:
 * MONGODB_PORT - (default is `27017`)
 * MONGODB_USERNAME - (default is empty)
 * MONGODB_PASSWORD - (default is empty)
+* SSL - (default is `True`)
 
 URI style connections are also supported, just supply the URI as `MONGODB_HOST` (note that URI properties will take precedence).
 

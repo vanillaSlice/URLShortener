@@ -2,7 +2,7 @@
 Exports URLShortener app blueprints.
 """
 
-from flask import Blueprint, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint, current_app, jsonify, redirect, render_template, request
 from bson.objectid import ObjectId
 from mongoengine.errors import DoesNotExist, ValidationError
 
@@ -12,7 +12,11 @@ home = Blueprint("home", __name__, url_prefix="/")
 
 @home.route("/")
 def index():
-    return render_template("home.html")
+    if current_app.config.get("SSL"):
+        app_url = request.url.replace("http://", "https://")
+    else:
+        app_url = request.url
+    return render_template("home.html", app_url=app_url)
 
 @home.route("/new/<path:url>")
 def new_url(url):
@@ -29,5 +33,5 @@ def new_url(url):
 def go_to_url(sequence):
     try:
         return redirect(URLEntry.objects.get(sequence=sequence)._id)
-    except:
+    except Exception:
         return jsonify({"error": "url does not exist in the database"}), 400

@@ -15,6 +15,7 @@ class Default(object):
     MONGODB_PORT = 27017
     MONGODB_USERNAME = ""
     MONGODB_PASSWORD = ""
+    SSL = False
 
 class Test(Default):
     """Test config properties."""

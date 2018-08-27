@@ -10,6 +10,7 @@ class Default(object):
     DEBUG = True
     SECRET_KEY = "default secret key"
     SERVER_NAME = "localhost:5000"
+    SESSION_COOKIE_DOMAIN = "localhost:5000"
     MONGODB_DB = "urlshortener"
     MONGODB_HOST = "localhost"
     MONGODB_PORT = 27017

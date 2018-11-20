@@ -12,8 +12,6 @@ install:
   - pip install -r requirements-test.txt
 script:
   - ./scripts/test.sh
-after_success:
-  - heroku login
-  - heroku container:login
-  - heroku container:push web
-  - heroku container:release web
+deploy:
+  provider: script
+  script: ./scripts/deploy.sh

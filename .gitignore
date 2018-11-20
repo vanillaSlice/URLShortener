@@ -1,6 +1,15 @@
-__pycache__
-.vscode
-venv
+# macOS
 .DS_Store
-instance
+
+# VSCode
+.vscode
+
+# Python
+__pycache__
+
+# Coverage
 .coverage
+
+# Local config
+instance/*
+!instance/config-example.py

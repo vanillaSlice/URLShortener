@@ -1,0 +1,8 @@
+[MASTER]
+max-line-length=120
+
+[MESSAGES CONTROL]
+disable=invalid-name,
+        no-else-return,
+        no-member,
+        unused-variable

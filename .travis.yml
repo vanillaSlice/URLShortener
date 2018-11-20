@@ -1,0 +1,16 @@
+language: python
+branches:
+  only:
+    - master
+python: 3.7
+dist: xenial
+sudo: true
+services:
+  - docker
+install:
+  - pip install -r requirements.txt
+after_success:
+  - heroku login
+  - heroku container:login
+  - heroku container:push web
+  - heroku container:release web

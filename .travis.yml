@@ -16,7 +16,7 @@ script:
 #   provider: script
 #   script: ./scripts/deploy.sh
 after_success:
-  - docker login -u _ -p "$HEROKU_API_TOKEN"  registry.heroku.com
+  - docker login -u _ -p "$HEROKU_API_KEY"  registry.heroku.com
   - docker build -t registry.heroku.com/sliceurl/web -f Dockerfile .
   - docker push registry.heroku.com/sliceurl/web
   - heroku run --app sliceurl

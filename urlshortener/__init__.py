@@ -19,6 +19,9 @@ def create_app(testing=False):
     # load default config
     app.config.from_object('config.Default')
 
+    # load instance config (if present)
+    app.config.from_pyfile('config.py', silent=True)
+
     # load test config (if testing)
     if testing:
         app.config.from_object('config.Test')

@@ -1,18 +1,14 @@
-# Grab the latest alpine image
-FROM alpine:latest
+FROM python:3.7-alpine
 
-# Install python runtime
-RUN apk --update add python3 py-pip py-gunicorn py-psycopg2 bash 
-
-# Install dependencies
+# Install the requirements
 COPY ./requirements.txt /opt/URLShortener/requirements.txt
 RUN pip install -qr /opt/URLShortener/requirements.txt
 
-# Copy our code
+# Copy the code
 COPY ./run.py /opt/URLShortener/run.py
 COPY ./config.py /opt/URLShortener/config.py
 COPY ./urlshortener /opt/URLShortener/urlshortener
 
 # Run the app            
 WORKDIR /opt/URLShortener
-CMD gunicorn run:app --log-file -
+CMD gunicorn run:app

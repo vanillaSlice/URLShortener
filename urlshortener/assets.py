@@ -9,5 +9,10 @@ bundles = {
         '**/*.js',
         filters='jsmin',
         output='build/bundle.min.js'
+    ),
+    'all_css': Bundle(
+        '**/*.css',
+        filters='cssmin',
+        output='build/bundle.min.css'
     )
 }

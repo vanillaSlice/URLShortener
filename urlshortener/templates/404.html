@@ -3,5 +3,5 @@
 {% block content %}
   <h1>Where you going bro?</h1>
   <p>We don't have a URL with that address in our database :(</p>
-  <a href="/">Go Home</a>?
+  <a href="{{ url_for('home.index') }}">Go Home</a>?
 {% endblock %}

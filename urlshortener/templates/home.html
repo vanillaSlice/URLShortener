@@ -2,14 +2,17 @@
 
 {% block content %}
   <h1>URL Shortener</h1>
-  <form class="row flex-center" id="url-form">
+  <div class="row flex-center text-left">
+    <div class="col sm-8 padding-none" id="alerts"></div>
+  </div>
+  <form class="row flex-center" id="link-form">
     <div class="form-group col sm-8 padding-none">
-      <input class="input-block" id="original-url" type="url" placeholder="Enter a link to shorten it" required>
-      <button class="btn-small margin-small" type="submit">Shorten</button>
+      <input class="input-block" id="link-input" type="url" placeholder="Enter a link to shorten it" required>
+      <button class="btn-block margin-top-small" type="submit">Shorten</button>
     </div>
   </form>
-  <h2 class="margin-top-none margin-bottom-small">Your Links</h2>
+  <h2 class="margin-top-none margin-bottom-small hidden" id="links-heading">Your Links</h2>
   <div class="row flex-center text-left">
-    <div class="col sm-8 padding-none" id="your-links"></div>
+    <div class="col sm-8 padding-none" id="links"></div>
   </div>
 {% endblock %}

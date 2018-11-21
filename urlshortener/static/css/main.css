@@ -1,0 +1,11 @@
+.hidden {
+  display: none;
+}
+
+.card {
+  width: 100%;
+}
+
+.card-body p:last-of-type {
+  margin-bottom: 0;
+} 

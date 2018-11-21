@@ -18,6 +18,10 @@
   <meta name="theme-color" content="#ffffff">
   <!-- PaperCSS -->
   <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.0/dist/paper.min.css">
+  <!-- Site CSS -->
+  {% assets 'all_css' %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}" />
+  {% endassets %}
 </head>
 
 <body class="container text-center">
@@ -26,7 +30,7 @@
   </div>
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <!-- site js -->
+  <!-- Site JS -->
   {% assets 'all_js' %}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}

@@ -1,21 +1,21 @@
 """
-Exports URLShortener app blueprints.
+Exports URL Shortener app blueprints.
 """
 
 from flask import Blueprint, current_app, jsonify, redirect, render_template, request
 from mongoengine.errors import DoesNotExist, ValidationError
 
-from .models import URLEntry
+from urlshortener.models import URLEntry
 
-home = Blueprint("home", __name__, url_prefix="/")
+home = Blueprint('home', __name__, url_prefix='/')
 
-@home.route("/")
+@home.route('/')
 def index():
     """
     Index route.
     """
 
-    return render_template("home.html", app_url=get_app_url())
+    return render_template('home.html', app_url=get_app_url())
 
 @home.route("/new/<path:url>")
 def new_url(url):

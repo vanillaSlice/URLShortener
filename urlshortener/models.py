@@ -1,18 +1,18 @@
 """
-Exports URLShortener app data models.
+Exports URL Shortener app data models.
 """
 
 from mongoengine import Document, SequenceField, URLField
 
 class URLEntry(Document):
     """
-    URL entry to save to database.
+    URL entry used in database.
     """
 
     _id = URLField(required=True)
     sequence = SequenceField()
 
-    meta = {"collection": "url_map"}
+    meta = {'collection': 'url_map'}
 
     def get_url(self):
         """

@@ -3,7 +3,7 @@ Exports URL Shortener app blueprints.
 """
 
 from flask import abort, Blueprint, current_app, jsonify, redirect, render_template, request
-from mongoengine.errors import DoesNotExist, ValidationError
+from mongoengine.errors import ValidationError
 
 from urlshortener.models import URLEntry
 
@@ -23,14 +23,13 @@ def new_url(url):
     Saves a new URL to the database and returns the short URL.
     """
 
-    try:
-        entry = URLEntry.objects.get(_id=url)
-    except DoesNotExist:
+    url_entry = URLEntry.objects(_id=url).first()
+    if not url_entry:
         try:
-            entry = URLEntry(url).save()
+            url_entry = URLEntry(url).save()
         except ValidationError:
-            return jsonify({'error': 'Invalid url'}), 400
-    return jsonify({'original_url': url, 'short_url': get_app_url() + str(entry.sequence)}), 200
+            return jsonify({'error': 'Invalid URL'}), 400
+    return jsonify({'original_url': url, 'short_url': get_app_url() + str(url_entry.sequence)}), 200
 
 @home.route('/<int:sequence>')
 def go_to_url(sequence):

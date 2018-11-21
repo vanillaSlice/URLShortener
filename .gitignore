@@ -4,15 +4,17 @@
 # VSCode
 .vscode
 
+# Build Artifacts
+build
+
 # Python
 __pycache__
 
 # Coverage
 .coverage
 
-# Flask-Assets
+# Flask-Assets cache
 .webassets-cache
-urlshortener/static/build
 
 # Local config
 instance/*

@@ -3,6 +3,7 @@ $(document).ready(function() {
   /*
    * Elements
    */
+
   var alertsElement = $('#alerts');
   var linkFormElement = $('#link-form');
   var linkInputElement = $('#link-input');
@@ -12,6 +13,7 @@ $(document).ready(function() {
   /*
    * Variables
    */
+
   var linkCache;
 
   /*

@@ -10,6 +10,9 @@ __pycache__
 # Coverage
 .coverage
 
+# Flask-Assets cache
+.webassets-cache
+
 # Local config
 instance/*
 !instance/config-example.py

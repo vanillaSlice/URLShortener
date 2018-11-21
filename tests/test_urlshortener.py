@@ -38,6 +38,10 @@ def test_go_to_url_redirects_to_url(client):
     res = client.get('/1')
     assert res.status_code == 302
 
+def test_go_to_url_invalid_returns_400(client):
+    res = client.get('/invalid_url')
+    assert res.status_code == 404
+
 def test_go_to_url_not_in_database_returns_404(client):
     res = client.get('/123456789')
     assert res.status_code == 404

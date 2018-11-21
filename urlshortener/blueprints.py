@@ -15,7 +15,7 @@ def index():
     Index route.
     """
 
-    return render_template('home.html', app_url=get_app_url())
+    return render_template('home.html')
 
 @home.route('/new/<path:url>')
 def new_url(url):
@@ -29,10 +29,10 @@ def new_url(url):
         try:
             entry = URLEntry(url).save()
         except ValidationError:
-            return jsonify({'error': 'invalid url'}), 400
+            return jsonify({'error': 'Invalid url'}), 400
     return jsonify({'original_url': url, 'short_url': get_app_url() + str(entry.sequence)}), 200
 
-@home.route('/<sequence>')
+@home.route('/<int:sequence>')
 def go_to_url(sequence):
     """
     Redirects to URL in database with given sequence.

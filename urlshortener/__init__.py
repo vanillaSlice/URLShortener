@@ -5,7 +5,12 @@ Exports a function to create an instance of the URL Shortener app.
 import os
 
 from flask import Flask, render_template
+from flask_assets import Environment
 from flask_mongoengine import MongoEngine
+
+from urlshortener.assets import bundles
+
+assets = Environment()
 
 mongoengine = MongoEngine()
 
@@ -45,6 +50,7 @@ def create_app(testing=False):
     })
 
     # init extensions
+    assets.init_app(app)
     mongoengine.init_app(app)
 
     # disable strict trailing slashes
@@ -53,6 +59,9 @@ def create_app(testing=False):
     # register blueprints
     from urlshortener.blueprints import home
     app.register_blueprint(home)
+
+    # register asset bundles
+    assets.register(bundles)
 
     # attach 404 error handler
     @app.errorhandler(404)

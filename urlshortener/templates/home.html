@@ -2,17 +2,14 @@
 
 {% block content %}
   <h1>URL Shortener</h1>
-  <h3>Example creation usage:</h3>
-  <pre>
-  {{app_url}}new/https://i.ytimg.com/vi/Mra4JojUxkk/maxresdefault.jpg
-  {{app_url}}new/https://www.irishtimes.com/polopoly_fs/1.3382212.1517928427!/image/image.jpg_gen/derivatives/box_620_330/image.jpg</pre>
-  <h3>Example creation output:</h3>
-  <pre>
-  { "original_url": "https://i.ytimg.com/vi/Mra4JojUxkk/maxresdefault.jpg", "short_url": "{{app_url}}1" }</pre>
-  <h3>Usage:</h3>
-  <pre>
-  {{app_url}}1</pre>
-  <h3>Will redirect to:</h3>
-  <pre>
-  https://i.ytimg.com/vi/Mra4JojUxkk/maxresdefault.jpg</pre>
+  <form class="row flex-center" id="url-form">
+    <div class="form-group col sm-8 padding-none">
+      <input class="input-block" id="original-url" type="url" placeholder="Enter a link to shorten it" required>
+      <button class="btn-small margin-small" type="submit">Shorten</button>
+    </div>
+  </form>
+  <h2 class="margin-top-none margin-bottom-small">Your Links</h2>
+  <div class="row flex-center text-left">
+    <div class="col sm-8 padding-none" id="your-links"></div>
+  </div>
 {% endblock %}

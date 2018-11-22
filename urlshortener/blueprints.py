@@ -24,31 +24,36 @@ def new_url(url):
     """
 
     url_entry = URLEntry.objects(_id=url).first()
+
     if not url_entry:
         try:
             url_entry = URLEntry(url).save()
         except ValidationError:
             return jsonify({'error': 'Invalid URL'}), 400
-    return jsonify({'original_url': url, 'short_url': get_app_url() + str(url_entry.sequence)}), 200
 
-@home.route('/<int:sequence>')
+    if current_app.config.get('SSL'):
+        app_url = request.host_url.replace('http://', 'https://')
+    else:
+        app_url = request.host_url
+
+    encoded_sequence = hex(url_entry.sequence)[2:]
+
+    return jsonify({'original_url': url, 'short_url': app_url + encoded_sequence}), 200
+
+@home.route('/<sequence>')
 def go_to_url(sequence):
     """
     Redirects to URL in database with given sequence.
     """
 
-    url_entry = URLEntry.objects(sequence=sequence).first()
+    try:
+        decoded_sequence = int(sequence, 16)
+    except ValueError:
+        return abort(404)
+
+    url_entry = URLEntry.objects(sequence=decoded_sequence).first()
+
     if url_entry:
         return redirect(url_entry.get_url())
     else:
         return abort(404)
-
-def get_app_url():
-    """
-    Returns the app URL.
-    """
-
-    if current_app.config.get('SSL'):
-        return request.host_url.replace('http://', 'https://')
-    else:
-        return request.host_url

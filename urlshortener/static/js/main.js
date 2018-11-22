@@ -41,12 +41,27 @@ $(document).ready(function() {
   }
 
   function addToLinkCache(originalLink, shortLink) {
-    linkCache[originalLink] = shortLink;
+    linkCache.push({
+      'originalLink': originalLink,
+      'shortLink': shortLink
+    });
     localStorage.setItem('linkCache', JSON.stringify(linkCache));
   }
 
+  function moveToEndOfLinkCache(index) {
+    var item = linkCache[index];
+    linkCache.splice(index, 1);
+    addToLinkCache(item.originalLink, item.shortLink);
+  }
+
   function isInLinkCache(originalLink) {
-    return linkCache.hasOwnProperty(originalLink);
+    return getLinkCacheIndex(originalLink) >= 0;
+  }
+
+  function getLinkCacheIndex(originalLink) {
+    return linkCache.map(function(item) {
+      return item.originalLink;
+    }).indexOf(originalLink);
   }
 
   function addLinkCard(originalLink, shortLink) {
@@ -60,21 +75,43 @@ $(document).ready(function() {
     );
   }
 
+  function moveLinkCardToTop(linkCacheIndex) {
+    var cards = linksElement.find('.card');
+    var cardIndex = cards.length - linkCacheIndex - 1;
+    var card = cards[cardIndex];
+    card.remove();
+    linksElement.prepend(card);
+  }
+
   function handleLinkFormSubmit(e) {
     e.preventDefault();
-    $.get('/new/' + linkInputElement.val())
+
+    var originalLink = linkInputElement.val();
+    
+    if (isInLinkCache(originalLink)) {
+      handleCachedLink(originalLink);
+      return;
+    }
+
+    $.get('/new/' + originalLink)
       .done(handleShortenLinkSuccess)
       .fail(handleShortenLinkFailure);
+  }
+
+  function handleCachedLink(originalLink) {
+    var linkCacheIndex = getLinkCacheIndex(originalLink);
+    moveLinkCardToTop(linkCacheIndex);
+    moveToEndOfLinkCache(linkCacheIndex);
+    resetLinkForm();
+    clearAlerts();
   }
 
   function handleShortenLinkSuccess(res) {
     var originalLink = linkInputElement.val();
     var shortLink = res.short_url;
-    if (!isInLinkCache(originalLink)) {
-      showLinksHeading();
-      addLinkCard(originalLink, shortLink);
-      addToLinkCache(originalLink, shortLink);
-    }
+    showLinksHeading();
+    addLinkCard(originalLink, shortLink);
+    addToLinkCache(originalLink, shortLink);
     resetLinkForm();
     clearAlerts();
   }
@@ -85,16 +122,14 @@ $(document).ready(function() {
   }
 
   function loadLinkCache() {
-    return JSON.parse(localStorage.getItem('linkCache')) || {};
+    return JSON.parse(localStorage.getItem('linkCache')) || [];
   }
 
   function showLinksInCache() {
-    for (var originalLink in linkCache) {
-      if (linkCache.hasOwnProperty(originalLink)) {
-        showLinksHeading();
-        addLinkCard(originalLink, linkCache[originalLink]);
-      }
-    }
+    linkCache.forEach(function(item) {
+      showLinksHeading();
+      addLinkCard(item.originalLink, item.shortLink);
+    });
   }
 
   /* 

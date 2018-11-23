@@ -33,6 +33,14 @@ def test_new_url_invalid_returns_400(client):
     res = client.get('/new/invalid_url')
     assert res.status_code == 400
 
+def test_new_url_with_query_parameters_returns_short_url(client):
+    original_url = 'https://www.youtube.com/watch?v=FyYMzEplnfU'
+    URLEntry(original_url, sequence=1).save()
+    res = client.get('/new/{}'.format(original_url))
+    assert res.status_code == 200
+    assert res.json['original_url'] == original_url
+    assert res.json['short_url'].endswith('/1')
+
 def test_go_to_url_redirects_to_url(client):
     URLEntry('https://www.placecage.com/g/155/300', sequence=1).save()
     res = client.get('/1')

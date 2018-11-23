@@ -8,6 +8,10 @@
 A simple URL shortener built with [Flask](http://flask.pocoo.org/) and [MongoDB](https://www.mongodb.com/).
 A deployed version can be viewed [here](https://sliceurl.herokuapp.com/).
 
+## Screenshot
+
+![Screenshot](/images/screenshot-1.png)
+
 ## Getting Started
 
 ### Installing Requirements

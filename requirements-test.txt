@@ -1,5 +1,5 @@
 coveralls==1.5.1
 mongomock==3.14.0
-pylint==2.1.1
-pytest==4.0.0
+pylint==2.2.2
+pytest==4.0.1
 pytest-cov==2.6.0

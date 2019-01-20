@@ -16,7 +16,8 @@ A deployed version can be viewed [here](https://sliceurl.herokuapp.com/).
 
 ### Installing Requirements
 
-1. (Optional) Install [virtualenv](https://pypi.org/project/virtualenv/) and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/) and create a new environment.
+1. (Optional) Install [virtualenv](https://pypi.org/project/virtualenv/) and
+[virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/) and create a new environment.
 2. Run `pip install -r requirements.txt`.
 
 ### Setting up MongoDB
@@ -67,7 +68,7 @@ Then point your browser to [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 
 For those of you that are interested, the technology used in this project includes:
 
-* [Python 3.7](https://www.python.org/downloads/release/python-370/)
+* [Python 3.7](https://www.python.org/downloads/release/python-372/)
 * [Flask](http://flask.pocoo.org/) (Microframework)
 * [MongoDB](https://www.mongodb.com/) and
 [Flask-MongoEngine](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/) (Database)

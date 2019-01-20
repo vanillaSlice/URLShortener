@@ -4,11 +4,11 @@ $(document).ready(function() {
    * Elements
    */
 
-  var alertsElement = $('#alerts');
-  var linkFormElement = $('#link-form');
-  var linkInputElement = $('#link-input');
-  var linksHeadingElement = $('#links-heading');
-  var linksElement = $('#links');
+  var alertsElement = $('.js-alerts');
+  var linkFormElement = $('.js-link-form');
+  var linkInputElement = $('.js-link-input');
+  var linksHeadingElement = $('.js-links-heading');
+  var linksElement = $('.js-links');
 
   /*
    * Variables
@@ -66,7 +66,7 @@ $(document).ready(function() {
 
   function addLinkCard(originalLink, shortLink) {
     linksElement.prepend(
-      '<div class="card margin-bottom">' +
+      '<div class="card margin-bottom js-card">' +
         '<div class="card-body">' +
           '<p>Original Link: <a href="' + originalLink + '">' + originalLink + '</a></p>' +
           '<p>Short Link: <a href="' + shortLink + '">' + shortLink + '</a></p>' +
@@ -76,7 +76,7 @@ $(document).ready(function() {
   }
 
   function moveLinkCardToTop(linkCacheIndex) {
-    var cards = linksElement.find('.card');
+    var cards = linksElement.find('.js-card');
     var cardIndex = cards.length - linkCacheIndex - 1;
     var card = cards[cardIndex];
     card.remove();
@@ -122,7 +122,8 @@ $(document).ready(function() {
   }
 
   function loadLinkCache() {
-    return JSON.parse(localStorage.getItem('linkCache')) || [];
+    var parsedLinkCache = JSON.parse(localStorage.getItem('linkCache'));
+    return Array.isArray(parsedLinkCache) ? parsedLinkCache : [];
   }
 
   function showLinksInCache() {
@@ -139,5 +140,4 @@ $(document).ready(function() {
   linkFormElement.submit(handleLinkFormSubmit);
   linkCache = loadLinkCache();
   showLinksInCache();
-
 });

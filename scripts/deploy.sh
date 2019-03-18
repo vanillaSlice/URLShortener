@@ -4,7 +4,7 @@
 docker login --username=_ --password="$HEROKU_API_KEY" registry.heroku.com
 
 # build and push the image
-docker build -t registry.heroku.com/sliceurl/web -f $(dirname $0)/../Dockerfile .
+docker build -t registry.heroku.com/sliceurl/web -f $(dirname $0)/docker/prod.Dockerfile .
 docker push registry.heroku.com/sliceurl/web
 
 # deploy the image

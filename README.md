@@ -14,13 +14,34 @@ A deployed version can be viewed [here](https://sliceurl.herokuapp.com/).
 
 ## Getting Started
 
-### Installing Requirements
+* [With Docker](#with-docker)
+* [Without Docker](#without-docker)
+
+### With Docker
+
+#### Prerequisites
+
+* [Docker](https://www.docker.com/)
+
+#### Running
+
+From your terminal/command prompt run:
+
+```
+docker-compose up
+```
+
+Then point your browser to [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
+
+### Without Docker
+
+#### Installing Requirements
 
 1. (Optional) Install [virtualenv](https://pypi.org/project/virtualenv/) and
 [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/) and create a new environment.
 2. Run `pip install -r requirements.txt`.
 
-### Setting up MongoDB
+#### Setting up MongoDB
 
 You can either:
 
@@ -30,7 +51,7 @@ or:
 
 * Create a database in the cloud using [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
 
-### Configuration
+#### Configuration
 
 The following properties can be configured:
 
@@ -54,7 +75,7 @@ that any environment variables take precedence).
 URI style connections are also supported for connecting to MongoDB, just supply the URI as `MONGODB_HOST` (note that
 URI properties will take precedence).
 
-### Running
+#### Running
 
 From your terminal/command prompt run:
 
@@ -73,6 +94,7 @@ For those of you that are interested, the technology used in this project includ
 * [MongoDB](https://www.mongodb.com/) and
 [Flask-MongoEngine](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/) (Database)
 * [pytest](https://docs.pytest.org/en/latest/) and [Mongomock](https://github.com/mongomock/mongomock) (Testing)
+* [Docker](https://www.docker.com/)
 
 ## License
 

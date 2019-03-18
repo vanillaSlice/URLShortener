@@ -4,7 +4,7 @@ WORKDIR /opt/app
 
 # Install the requirements
 COPY ./requirements.txt ./requirements.txt
-RUN pip install -qr requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy the code
 COPY ./urlshortener ./urlshortener

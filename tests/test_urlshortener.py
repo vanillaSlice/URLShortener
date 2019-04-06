@@ -18,15 +18,15 @@ def test_new_url_returns_short_url(client):
     original_url = 'https://www.placecage.com/200/300'
     res = client.get('/new/{}'.format(original_url))
     assert res.status_code == 200
-    assert res.json['original_url'] == '{}?'.format(original_url)
+    assert res.json['original_url'] == original_url
     assert res.json['short_url'].endswith('/1')
 
 def test_new_url_already_exists_returns_short_url(client):
     original_url = 'https://www.placecage.com/200/300'
-    URLEntry('{}?'.format(original_url), sequence=1).save()
+    URLEntry(original_url, sequence=1).save()
     res = client.get('/new/{}'.format(original_url))
     assert res.status_code == 200
-    assert res.json['original_url'] == '{}?'.format(original_url)
+    assert res.json['original_url'] == original_url
     assert res.json['short_url'].endswith('/1')
 
 def test_new_url_invalid_returns_400(client):
@@ -52,15 +52,15 @@ def test_new_url_with_new_in_path_returns_short_url(client):
     original_url = 'https://www.google.com/new/'
     res = client.get('/new/{}'.format(original_url))
     assert res.status_code == 200
-    assert res.json['original_url'] == '{}?'.format(original_url)
+    assert res.json['original_url'] == original_url
     assert res.json['short_url'].endswith('/3')
 
 def test_new_url_with_new_in_path_already_exists_returns_short_url(client):
     original_url = 'https://www.google.com/new/'
-    URLEntry('{}?'.format(original_url), sequence=3).save()
+    URLEntry(original_url, sequence=3).save()
     res = client.get('/new/{}'.format(original_url))
     assert res.status_code == 200
-    assert res.json['original_url'] == '{}?'.format(original_url)
+    assert res.json['original_url'] == original_url
     assert res.json['short_url'].endswith('/3')
 
 def test_go_to_url_redirects_to_url(client):

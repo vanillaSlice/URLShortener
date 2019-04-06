@@ -8,10 +8,7 @@ var rawLinkCache = JSON.parse(localStorage.getItem('linkCache'));
 var linkCache = Array.isArray(rawLinkCache) ? rawLinkCache : [];
 
 function addToLinkCache(originalLink, shortLink) {
-  linkCache.push({
-    'originalLink': originalLink,
-    'shortLink': shortLink
-  });
+  linkCache.push({ 'originalLink': originalLink, 'shortLink': shortLink });
   localStorage.setItem('linkCache', JSON.stringify(linkCache));
 }
 
@@ -37,8 +34,7 @@ linkFormElement.submit(function(e) {
 
   if (linkCacheIndex >= 0) {
     var cards = linksElement.find('.js-card');
-    var cardIndex = cards.length - linkCacheIndex - 1;
-    var card = cards[cardIndex];
+    var card = cards[cards.length - linkCacheIndex - 1];
     card.remove();
     linksElement.prepend(card);
 
@@ -54,10 +50,9 @@ linkFormElement.submit(function(e) {
 
   $.get('/new/' + originalLink)
     .done(function(res) {
-      var shortLink = res.short_url;
       linksHeadingElement.removeClass('hidden');
-      addLinkCard(originalLink, shortLink);
-      addToLinkCache(originalLink, shortLink);
+      addLinkCard(originalLink, res.short_url);
+      addToLinkCache(originalLink, res.short_url);
       linkFormElement.trigger('reset');
       alertsElement.empty();
     })

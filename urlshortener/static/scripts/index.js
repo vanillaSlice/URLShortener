@@ -1,42 +1,11 @@
-/*
- * Elements
- */
-
 var alertsElement = $('.js-alerts');
 var linkFormElement = $('.js-link-form');
 var linkInputElement = $('.js-link-input');
 var linksHeadingElement = $('.js-links-heading');
 var linksElement = $('.js-links');
 
-/*
- * Variables
- */
-
-var linkCache;
-
-/*
- * Functions
- */
-
-function addAlert(type, message) {
-  alertsElement.append(
-    '<div class="alert alert-' + type + '">' +
-      message +
-    '</div>'
-  );
-}
-
-function clearAlerts() {
-  alertsElement.empty();
-}
-
-function resetLinkForm() {
-  linkFormElement.trigger('reset');
-}
-
-function showLinksHeading() {
-  linksHeadingElement.removeClass('hidden');
-}
+var rawLinkCache = JSON.parse(localStorage.getItem('linkCache'));
+var linkCache = Array.isArray(rawLinkCache) ? rawLinkCache : [];
 
 function addToLinkCache(originalLink, shortLink) {
   linkCache.push({
@@ -44,22 +13,6 @@ function addToLinkCache(originalLink, shortLink) {
     'shortLink': shortLink
   });
   localStorage.setItem('linkCache', JSON.stringify(linkCache));
-}
-
-function moveToEndOfLinkCache(index) {
-  var item = linkCache[index];
-  linkCache.splice(index, 1);
-  addToLinkCache(item.originalLink, item.shortLink);
-}
-
-function isInLinkCache(originalLink) {
-  return getLinkCacheIndex(originalLink) >= 0;
-}
-
-function getLinkCacheIndex(originalLink) {
-  return linkCache.map(function(item) {
-    return item.originalLink;
-  }).indexOf(originalLink);
 }
 
 function addLinkCard(originalLink, shortLink) {
@@ -73,68 +26,52 @@ function addLinkCard(originalLink, shortLink) {
   );
 }
 
-function moveLinkCardToTop(linkCacheIndex) {
-  var cards = linksElement.find('.js-card');
-  var cardIndex = cards.length - linkCacheIndex - 1;
-  var card = cards[cardIndex];
-  card.remove();
-  linksElement.prepend(card);
-}
-
-function handleLinkFormSubmit(e) {
+linkFormElement.submit(function(e) {
   e.preventDefault();
 
   var originalLink = linkInputElement.val();
   
-  if (isInLinkCache(originalLink)) {
-    handleCachedLink(originalLink);
+  var linkCacheIndex = linkCache.map(function(item) {
+    return item.originalLink;
+  }).indexOf(originalLink);
+
+  if (linkCacheIndex >= 0) {
+    var cards = linksElement.find('.js-card');
+    var cardIndex = cards.length - linkCacheIndex - 1;
+    var card = cards[cardIndex];
+    card.remove();
+    linksElement.prepend(card);
+
+    var item = linkCache[linkCacheIndex];
+    linkCache.splice(linkCacheIndex, 1);
+    addToLinkCache(item.originalLink, item.shortLink);
+
+    linkFormElement.trigger('reset');
+    alertsElement.empty();
+
     return;
   }
 
   $.get('/new/' + originalLink)
-    .done(handleShortenLinkSuccess)
-    .fail(handleShortenLinkFailure);
-}
+    .done(function(res) {
+      var shortLink = res.short_url;
+      linksHeadingElement.removeClass('hidden');
+      addLinkCard(originalLink, shortLink);
+      addToLinkCache(originalLink, shortLink);
+      linkFormElement.trigger('reset');
+      alertsElement.empty();
+    })
+    .fail(function() {
+      alertsElement.empty();
+      alertsElement.append(
+        '<div class="alert alert-danger">' +
+          'Could not shorten this link, please try another one.' +
+        '</div>'
+      );
+    });
+});
 
-function handleCachedLink(originalLink) {
-  var linkCacheIndex = getLinkCacheIndex(originalLink);
-  moveLinkCardToTop(linkCacheIndex);
-  moveToEndOfLinkCache(linkCacheIndex);
-  resetLinkForm();
-  clearAlerts();
-}
-
-function handleShortenLinkSuccess(res) {
-  var originalLink = linkInputElement.val();
-  var shortLink = res.short_url;
-  showLinksHeading();
-  addLinkCard(originalLink, shortLink);
-  addToLinkCache(originalLink, shortLink);
-  resetLinkForm();
-  clearAlerts();
-}
-
-function handleShortenLinkFailure() {
-  clearAlerts();
-  addAlert('danger', 'Could not shorten this link, please try another one.');
-}
-
-function loadLinkCache() {
-  var parsedLinkCache = JSON.parse(localStorage.getItem('linkCache'));
-  return Array.isArray(parsedLinkCache) ? parsedLinkCache : [];
-}
-
-function showLinksInCache() {
-  linkCache.forEach(function(item) {
-    showLinksHeading();
-    addLinkCard(item.originalLink, item.shortLink);
-  });
-}
-
-/* 
- * Initialise 
- */
-
-linkFormElement.submit(handleLinkFormSubmit);
-linkCache = loadLinkCache();
-showLinksInCache();
+linkCache.forEach(function(item) {
+  linksHeadingElement.removeClass('hidden');
+  addLinkCard(item.originalLink, item.shortLink);
+});

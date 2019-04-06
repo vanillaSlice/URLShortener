@@ -23,7 +23,7 @@ def new_url(path):
     Saves a new URL to the database and returns the short URL.
     """
 
-    url = request.url.split('/new/')[1]
+    url = request.full_path[5:]
 
     url_entry = URLEntry.objects(_id=url).first()
 

@@ -3,7 +3,8 @@ services:
   mongodb:
     image: mongo:4.0.6-xenial
     volumes:
-      - ./mongodb/local-user.js:/docker-entrypoint-initdb.d/local-user.js
+      - ./mongodb/docker-entrypoint-initdb.d/local-user.js:/docker-entrypoint-initdb.d/local-user.js
+      - ./mongodb/data/db:/data/db
   urlshortener:
     build:
       context: .

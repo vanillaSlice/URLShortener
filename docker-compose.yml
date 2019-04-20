@@ -1,7 +1,7 @@
 version: '3'
 services:
   mongodb:
-    image: mongo:4.0.6-xenial
+    image: mongo:4.0.8-xenial
     volumes:
       - ./mongodb/docker-entrypoint-initdb.d/local-user.js:/docker-entrypoint-initdb.d/local-user.js
       - ./mongodb/data/db:/data/db

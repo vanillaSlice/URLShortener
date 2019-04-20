@@ -89,7 +89,7 @@ Then point your browser to [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 
 For those of you that are interested, the technology used in this project includes:
 
-* [Python 3.7](https://www.python.org/downloads/release/python-372/)
+* [Python 3.7](https://www.python.org/downloads/release/python-373/)
 * [Flask](http://flask.pocoo.org/) (Microframework)
 * [MongoDB](https://www.mongodb.com/) and
 [Flask-MongoEngine](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/) (Database)

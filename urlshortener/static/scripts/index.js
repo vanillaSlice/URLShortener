@@ -120,9 +120,12 @@ linkFormElement.submit(function(e) {
 linkInputElement.on('input', function() {
   shortenBtnElement
     .text('Shorten')
+    .removeClass('btn-success')
+    .removeClass('btn-danger')
     .removeClass('js-copy-btn')
     .removeAttr('data-clipboard-text')
     .removeAttr('type');
+  clearTimeout(clipboardTimeouts[shortenBtnElement.attr('id')]);
 });
 
 /*

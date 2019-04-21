@@ -1,3 +1,7 @@
+/*
+ * DOM Elements
+ */
+
 var alertsElement = $('.js-alerts');
 var linkFormElement = $('.js-link-form');
 var linkInputElement = $('.js-link-input');
@@ -5,15 +9,31 @@ var shortenBtnElement = $('.js-shorten-btn');
 var linksHeadingElement = $('.js-links-heading');
 var linksElement = $('.js-links');
 
+/*
+ * Cached Links
+ */
+
 var rawLinkCache = JSON.parse(localStorage.getItem('linkCache'));
 var linkCache = Array.isArray(rawLinkCache) ? rawLinkCache : [];
 
+/*
+ * Clipboard Timeouts - used when displaying clipboard 'Copied' text for a period of time
+ */
+
 var clipboardTimeouts = {};
+
+/*
+ * Adds an entry to the link cache
+ */
 
 function addToLinkCache(originalLink, shortLink) {
   linkCache.push({ 'originalLink': originalLink, 'shortLink': shortLink });
   localStorage.setItem('linkCache', JSON.stringify(linkCache));
 }
+
+/*
+ * Adds a new link card to the DOM
+ */
 
 function addLinkCard(originalLink, shortLink) {
   linksElement.prepend(
@@ -29,7 +49,11 @@ function addLinkCard(originalLink, shortLink) {
   );
 }
 
-function handleLinkShortenSuccess(shortLink) {
+/*
+ * Handles when a link has been successfully shortened
+ */
+
+function handleShortenLinkSuccess(shortLink) {
   linksHeadingElement.removeClass('hidden');
   linkFormElement.trigger('reset');
   alertsElement.empty();
@@ -39,6 +63,19 @@ function handleLinkShortenSuccess(shortLink) {
     .addClass('js-copy-btn')
     .attr('data-clipboard-text', shortLink)
     .attr('type', 'button');
+}
+
+/*
+ * Display an error when a link can't be shortened
+ */
+
+function handleShortenLinkFailure() {
+  alertsElement.empty();
+  alertsElement.append(
+    '<div class="alert alert-danger">' +
+      'Could not shorten this link, please try another one.' +
+    '</div>'
+  );
 }
 
 linkFormElement.submit(function(e) {
@@ -51,16 +88,18 @@ linkFormElement.submit(function(e) {
   }).indexOf(originalLink);
 
   if (linkCacheIndex >= 0) {
+    // reorder cards
     var cards = linksElement.find('.js-card');
     var card = cards[cards.length - linkCacheIndex - 1];
     card.remove();
     linksElement.prepend(card);
 
+    // reorder link cache
     var item = linkCache[linkCacheIndex];
     linkCache.splice(linkCacheIndex, 1);
     addToLinkCache(item.originalLink, item.shortLink);
 
-    handleLinkShortenSuccess(item.shortLink);
+    handleShortenLinkSuccess(item.shortLink);
 
     return;
   }
@@ -69,17 +108,14 @@ linkFormElement.submit(function(e) {
     .done(function(res) {
       addLinkCard(originalLink, res.short_url);
       addToLinkCache(originalLink, res.short_url);
-      handleLinkShortenSuccess(res.short_url);
+      handleShortenLinkSuccess(res.short_url);
     })
-    .fail(function() {
-      alertsElement.empty();
-      alertsElement.append(
-        '<div class="alert alert-danger">' +
-          'Could not shorten this link, please try another one.' +
-        '</div>'
-      );
-    });
+    .fail(handleShortenLinkFailure);
 });
+
+/*
+ * Update shorten link button when input is changed
+ */
 
 linkInputElement.on('input', function() {
   shortenBtnElement
@@ -89,13 +125,25 @@ linkInputElement.on('input', function() {
     .removeAttr('type');
 });
 
+/*
+ * Display heading if there are cached links
+ */
+
 if (linkCache.length > 0) {
   linksHeadingElement.removeClass('hidden');
 }
 
+/*
+ * Display cached links
+ */
+
 linkCache.forEach(function(item) {
   addLinkCard(item.originalLink, item.shortLink);
 });
+
+/*
+ * Changes clipboard button text and colour for 1 second before changing back
+ */
 
 function handleClipboardEvent(options) {
   return function(e) {
@@ -115,6 +163,10 @@ function handleClipboardEvent(options) {
     clipboardTimeouts[timeoutKey] = timeoutId;
   }
 }
+
+/*
+ * Add clipboard button event listeners
+ */
 
 new ClipboardJS('.js-copy-btn')
   .on('success', handleClipboardEvent({ btnText: 'Copied!', btnClass: 'btn-success' }))

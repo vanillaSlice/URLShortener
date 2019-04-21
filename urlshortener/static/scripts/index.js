@@ -8,51 +8,25 @@ var linksElement = $('.js-links');
 var rawLinkCache = JSON.parse(localStorage.getItem('linkCache'));
 var linkCache = Array.isArray(rawLinkCache) ? rawLinkCache : [];
 
+var clipboardTimeoutIds = {};
+
 function addToLinkCache(originalLink, shortLink) {
   linkCache.push({ 'originalLink': originalLink, 'shortLink': shortLink });
   localStorage.setItem('linkCache', JSON.stringify(linkCache));
 }
 
 function addLinkCard(originalLink, shortLink) {
-  var cardElement =
-    $(
-      '<div class="card margin-bottom js-card">' +
-        '<div class="card-body">' +
-          '<p>Original Link: <a href="' + originalLink + '">' + originalLink + '</a></p>' +
-          '<p>Short Link: <a href="' + shortLink + '">' + shortLink + '</a></p>' +
-          '<button class="btn-block btn-secondary margin-bottom-none js-copy-btn">Copy</button>' +
-        '</div>' +
-      '</div>'
-    );
-
-  var copyBtnElement = cardElement.find('.js-copy-btn');
-
-  copyBtnElement.click(_.debounce(function() {
-    var clipboardElement = $('<textarea/>')
-      .val(shortLink)
-      .attr('readonly', '')
-      .css('position', 'absolute')
-      .css('left', '-100%');
-    bodyElement.append(clipboardElement);
-    clipboardElement.select();
-    document.execCommand('copy');
-    clipboardElement.remove();
-
-    copyBtnElement
-      .text('Copied!')
-      .addClass('btn-success');
-
-    setTimeout(function() {
-      copyBtnElement
-        .text('Copy')
-        .removeClass('btn-success');
-    }, 1000);
-  }, 1000, {
-    leading: true,
-    trailing: false
-  }));
-
-  linksElement.prepend(cardElement);
+  linksElement.prepend(
+    '<div class="card margin-bottom js-card">' +
+      '<div class="card-body">' +
+        '<p>Original Link: <a href="' + originalLink + '">' + originalLink + '</a></p>' +
+        '<p>Short Link: <a href="' + shortLink + '">' + shortLink + '</a></p>' +
+        '<button class="btn-block btn-secondary margin-bottom-none js-copy-btn" data-clipboard-text="' + shortLink + '">' +
+          'Copy' +
+        '</button>' +
+      '</div>' +
+    '</div>'
+  );
 }
 
 linkFormElement.submit(function(e) {
@@ -101,4 +75,21 @@ linkFormElement.submit(function(e) {
 linkCache.forEach(function(item) {
   linksHeadingElement.removeClass('hidden');
   addLinkCard(item.originalLink, item.shortLink);
+});
+
+new ClipboardJS('.js-copy-btn').on('success', function(e) {
+  var text = e.text;
+  var copyBtnElement = e.trigger;
+
+  clearTimeout(clipboardTimeoutIds[text]);
+  
+  copyBtnElement.innerText = 'Copied!';
+  copyBtnElement.classList.add('btn-success');
+
+  var timeoutId = setTimeout(function() {
+    copyBtnElement.innerText = 'Copy';
+    copyBtnElement.classList.remove('btn-success');
+  }, 1000);
+
+  clipboardTimeoutIds[text] = timeoutId;
 });

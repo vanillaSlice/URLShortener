@@ -1,7 +1,7 @@
-var bodyElement = $(document.body);
 var alertsElement = $('.js-alerts');
 var linkFormElement = $('.js-link-form');
 var linkInputElement = $('.js-link-input');
+var shortenBtnElement = $('.js-shorten-btn');
 var linksHeadingElement = $('.js-links-heading');
 var linksElement = $('.js-links');
 
@@ -51,6 +51,13 @@ linkFormElement.submit(function(e) {
     linkFormElement.trigger('reset');
     alertsElement.empty();
 
+    linkInputElement.val(item.shortLink);
+    shortenBtnElement
+      .text('Copy')
+      .addClass('js-copy-btn')
+      .attr('data-clipboard-text', item.shortLink)
+      .attr('type', 'button');
+
     return;
   }
 
@@ -61,6 +68,13 @@ linkFormElement.submit(function(e) {
       addToLinkCache(originalLink, res.short_url);
       linkFormElement.trigger('reset');
       alertsElement.empty();
+
+      linkInputElement.val(res.short_url);
+      shortenBtnElement
+        .text('Copy')
+        .addClass('js-copy-btn')
+        .attr('data-clipboard-text', res.short_url)
+        .attr('type', 'button');
     })
     .fail(function() {
       alertsElement.empty();
@@ -72,16 +86,24 @@ linkFormElement.submit(function(e) {
     });
 });
 
+linkInputElement.on('input', function() {
+  shortenBtnElement
+    .text('Shorten')
+    .removeClass('js-copy-btn')
+    .removeAttr('data-clipboard-text')
+    .removeAttr('type');
+});
+
 linkCache.forEach(function(item) {
   linksHeadingElement.removeClass('hidden');
   addLinkCard(item.originalLink, item.shortLink);
 });
 
 new ClipboardJS('.js-copy-btn').on('success', function(e) {
-  var text = e.text;
+  var timeoutIdKey = e.trigger.id || e.text;
   var copyBtnElement = e.trigger;
 
-  clearTimeout(clipboardTimeoutIds[text]);
+  clearTimeout(clipboardTimeoutIds[timeoutIdKey]);
   
   copyBtnElement.innerText = 'Copied!';
   copyBtnElement.classList.add('btn-success');
@@ -91,5 +113,5 @@ new ClipboardJS('.js-copy-btn').on('success', function(e) {
     copyBtnElement.classList.remove('btn-success');
   }, 1000);
 
-  clipboardTimeoutIds[text] = timeoutId;
+  clipboardTimeoutIds[timeoutIdKey] = timeoutId;
 });

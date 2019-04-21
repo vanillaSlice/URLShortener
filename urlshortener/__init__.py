@@ -68,6 +68,11 @@ def create_app(testing=False):
     def handle_404(error):
         return render_template('404.html', error=error), 404
 
+    # attach 500 error handler
+    @app.errorhandler(500)
+    def handle_500(error):
+        return render_template('500.html', error=error), 500
+
     # disable caching when debugging
     if app.debug:
         @app.after_request

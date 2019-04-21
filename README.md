@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/github/license/vanillaSlice/URLShortener.svg)](LICENSE)
 
 A simple URL shortener built with [Flask](http://flask.pocoo.org/) and [MongoDB](https://www.mongodb.com/).
-A deployed version can be viewed [here](https://sliceurl.herokuapp.com/).
+A deployed version can be viewed [here](https://url.mikelowe.xyz/).
 
 ## Screenshot
 

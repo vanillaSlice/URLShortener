@@ -9,6 +9,7 @@ from flask_assets import Environment
 from flask_mongoengine import MongoEngine
 
 from urlshortener.assets import bundles
+from urlshortener.version import __version__
 
 assets = Environment()
 
@@ -47,6 +48,11 @@ def create_app(testing=False):
         'SESSION_COOKIE_DOMAIN':
             os.environ.get('SESSION_COOKIE_DOMAIN', app.config.get('SESSION_COOKIE_DOMAIN')),
         'SSL': os.environ.get('SSL', str(app.config.get('SSL'))).lower() == 'true'
+    })
+
+    # set version
+    app.config.update({
+        'VERSION': __version__
     })
 
     # init extensions

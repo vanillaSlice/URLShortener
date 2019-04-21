@@ -4,8 +4,12 @@ from urlshortener import create_app
 from urlshortener.models import URLEntry
 
 @pytest.fixture
-def client():
-    yield create_app(testing=True).test_client()
+def app():
+    yield create_app(testing=True)
+
+@pytest.fixture
+def client(app):
+    yield app.test_client()
 
     # make sure we clear the database when we're done
     URLEntry.objects.delete()
@@ -31,6 +35,10 @@ def test_new_url_already_exists_returns_short_url(client):
 
 def test_new_url_invalid_returns_400(client):
     res = client.get('/new/invalid_url')
+    assert res.status_code == 400
+
+def test_new_url_with_same_base_url_returns_400(client, app):
+    res = client.get('/new/http://{}'.format(app.config['SERVER_NAME']))
     assert res.status_code == 400
 
 def test_new_url_with_query_parameters_returns_short_url(client):

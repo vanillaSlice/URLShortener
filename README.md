@@ -10,7 +10,7 @@ A deployed version can be viewed [here](https://url.mikelowe.xyz/).
 
 ## Screenshot
 
-![Screenshot](/images/screenshot-2.png)
+![Screenshot](/images/screenshot-3.png)
 
 ## Getting Started
 

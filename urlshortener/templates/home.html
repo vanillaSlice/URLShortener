@@ -1,7 +1,9 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-  <h1>URL Shortener</h1>
+  <h1>
+    <a class="title-link" href="{{ url_for('home.index') }}">URL Shortener</a>
+  </h1>
   <div class="row flex-center text-left">
     <div class="col sm-8 padding-none js-alerts"></div>
   </div>

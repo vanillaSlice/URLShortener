@@ -5,6 +5,7 @@ Exports URL Shortener app blueprints.
 import re
 
 from flask import abort, Blueprint, current_app, jsonify, redirect, render_template, request
+from hashids import Hashids
 from mongoengine.errors import ValidationError
 
 from urlshortener.models import URLEntry
@@ -48,24 +49,27 @@ def new_url(path):
     else:
         app_url = request.host_url
 
-    encoded_sequence = hex(url_entry.sequence)[2:]
+    hashids = Hashids(current_app.config['SECRET_KEY'])
+    encoded_sequence = hashids.encode(url_entry.sequence)
 
     return jsonify({'original_url': request_url, 'short_url': app_url + encoded_sequence}), 200
 
-@home.route('/<sequence>')
-def go_to_url(sequence):
+@home.route('/<hashed_id>')
+def go_to_url(hashed_id):
     """
-    Redirects to URL in database with given sequence.
+    Redirects to URL in database with the given hashed ID.
     """
 
-    try:
-        decoded_sequence = int(sequence, 16)
-    except ValueError:
+    hashids = Hashids(current_app.config['SECRET_KEY'])
+    decoded_sequence_tuple = hashids.decode(hashed_id)
+
+    if not decoded_sequence_tuple:
         return abort(404)
 
+    decoded_sequence = decoded_sequence_tuple[0]
     url_entry = URLEntry.objects(sequence=decoded_sequence).first()
 
-    if url_entry:
-        return redirect(url_entry.get_url())
-    else:
+    if not url_entry:
         return abort(404)
+
+    return redirect(url_entry.get_url())

@@ -3,4 +3,5 @@ Flask==1.0.2
 Flask-Assets==0.12
 flask-mongoengine==0.9.5
 gunicorn==19.9.0
+hashids==1.2.0
 jsmin==2.2.2

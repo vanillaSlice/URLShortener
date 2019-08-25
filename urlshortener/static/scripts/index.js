@@ -62,7 +62,8 @@ function handleShortenLinkSuccess(shortLink) {
     .text('Copy')
     .addClass('js-copy-btn')
     .attr('data-clipboard-text', shortLink)
-    .attr('type', 'button');
+    .attr('type', 'button')
+    .attr('disabled', false);
 }
 
 /*
@@ -76,13 +77,16 @@ function handleShortenLinkFailure() {
       'Could not shorten this link, please try another one.' +
     '</div>'
   );
+  shortenBtnElement.attr('disabled', false);
 }
 
 linkFormElement.submit(function(e) {
   e.preventDefault();
 
+  shortenBtnElement.attr('disabled', true);
+
   var originalLink = linkInputElement.val();
-  
+
   var linkCacheIndex = linkCache.map(function(item) {
     return item.originalLink;
   }).indexOf(originalLink);

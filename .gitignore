@@ -1,5 +1,6 @@
 .coverage
 .DS_Store
+.pytest_cache
 .vscode
 .webassets-cache
 __pycache__

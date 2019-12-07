@@ -1,7 +1,7 @@
 # URL Shortener
 
 [![Latest Release](https://img.shields.io/github/release/vanillaSlice/URLShortener.svg)](https://github.com/vanillaSlice/URLShortener/releases/latest)
-[![Build Status](https://img.shields.io/travis/vanillaSlice/URLShortener/master.svg)](https://travis-ci.org/vanillaSlice/URLShortener)
+[![Build Status](https://img.shields.io/travis/com/vanillaSlice/URLShortener/master.svg)](https://travis-ci.com/vanillaSlice/URLShortener)
 [![Coverage Status](https://img.shields.io/coveralls/github/vanillaSlice/URLShortener/master.svg)](https://coveralls.io/github/vanillaSlice/URLShortener?branch=master)
 [![License](https://img.shields.io/github/license/vanillaSlice/URLShortener.svg)](LICENSE)
 

@@ -10,20 +10,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Install Dependencies
+      - name: Test
         run: |
-          pip install -r requirements.txt
-          pip install -r requirements-test.txt
-      - name: Lint
-        run: |
-          pylint urlshortener/
-      - name: Unit Tests
-        run: |
-          pytest --cov urlshortener/ --cov-fail-under=90
+          docker build -t test -f ./docker/test.Dockerfile .
+          docker run test
   deploy:
     if: ${{ github.ref == 'refs/heads/master' }}
     needs: build
@@ -35,13 +25,12 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          docker login --username=_ --password="$HEROKU_API_KEY" registry.heroku.com
-          docker build -t registry.heroku.com/sliceurl/web -f ./docker/prod.Dockerfile .
+          docker login --username=_ --password='${HEROKU_API_KEY}' registry.heroku.com
+          docker build -t registry.heroku.com/sliceurl/web -f ./docker/Dockerfile .
           docker push registry.heroku.com/sliceurl/web
-          image_id=$(docker inspect registry.heroku.com/sliceurl/web --format={{.Id}})
-          payload='{"updates":[{"type":"web","docker_image":"'"$image_id"'"}]}'
+          IMAGE_ID=$(docker inspect registry.heroku.com/sliceurl/web --format={{.Id}})
           curl -n -X PATCH https://api.heroku.com/apps/sliceurl/formation \
-               -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
-               -H "Authorization: Bearer $HEROKU_API_KEY" \
-               -H "Content-Type: application/json" \
-               -d "$payload"
+               -H 'Accept: application/vnd.heroku+json; version=3.docker-releases' \
+               -H 'Authorization: Bearer ${HEROKU_API_KEY}' \
+               -H 'Content-Type: application/json' \
+               -d '{"updates":[{"type":"web","docker_image":"'"${IMAGE_ID}"'"}]}'

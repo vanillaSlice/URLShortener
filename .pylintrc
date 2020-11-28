@@ -2,7 +2,8 @@
 max-line-length=120
 
 [MESSAGES CONTROL]
-disable=invalid-name,
+disable=import-outside-toplevel,
+        invalid-name,
         no-member,
         unused-argument,
         unused-variable

@@ -40,7 +40,7 @@ def new_url(path):
 
     if not url_entry:
         try:
-            url_entry = URLEntry(request_url).save()
+            url_entry = URLEntry(_id=request_url).save()
         except ValidationError:
             return jsonify({'error': 'Invalid URL'}), 400
 

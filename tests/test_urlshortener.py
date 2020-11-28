@@ -27,7 +27,7 @@ def test_new_url_returns_short_url(client, app):
 
 def test_new_url_already_exists_returns_short_url(client, app):
     original_url = 'https://www.placecage.com/200/300'
-    URLEntry(original_url, sequence=1).save()
+    URLEntry(_id=original_url, sequence=1).save()
     res = client.get('/new/{}'.format(original_url))
     assert res.status_code == 200
     assert res.json['original_url'] == original_url
@@ -42,7 +42,7 @@ def test_new_url_with_query_parameters_returns_short_url(client, app):
 
 def test_new_url_with_query_parameters_already_exists_returns_short_url(client, app):
     original_url = 'https://www.youtube.com/watch?v=FyYMzEplnfU'
-    URLEntry(original_url, sequence=2).save()
+    URLEntry(_id=original_url, sequence=2).save()
     res = client.get('/new/{}'.format(original_url))
     assert res.status_code == 200
     assert res.json['original_url'] == original_url
@@ -57,7 +57,7 @@ def test_new_url_with_new_in_path_returns_short_url(client, app):
 
 def test_new_url_with_new_in_path_already_exists_returns_short_url(client, app):
     original_url = 'https://www.google.com/new/'
-    URLEntry(original_url, sequence=3).save()
+    URLEntry(_id=original_url, sequence=3).save()
     res = client.get('/new/{}'.format(original_url))
     assert res.status_code == 200
     assert res.json['original_url'] == original_url

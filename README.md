@@ -59,11 +59,7 @@ The following properties can be configured:
 | ----------------------- | ---------------------------------------------------------------- | -------------------- |
 | `DEBUG`                 | If debug mode is enabled.                                        | `False`              |
 | `ENV`                   | Environment the app is running in.                               | `production`         |
-| `MONGODB_DB`            | The MongoDB database name.                                       | `urlshortener`       |
 | `MONGODB_HOST`          | The MongoDB host name.                                           | `127.0.0.1`          |
-| `MONGODB_PASSWORD`      | The MongoDB password.                                            | `None`               |
-| `MONGODB_PORT`          | The MongoDB port.                                                | `27017`              |
-| `MONGODB_USERNAME`      | The MongoDB username.                                            | `None`               |
 | `SECRET_KEY`            | A secret key used for security.                                  | `default secret key` |
 | `SERVER_NAME`           | The host and port of the server.                                 | `127.0.0.1:5000`     |
 | `SESSION_COOKIE_DOMAIN` | The domain match rule that the session cookie will be valid for. | `127.0.0.1:5000`     |

@@ -41,19 +41,8 @@ def create_app(testing=False):
             os.environ.get('DEBUG', str(app.config.get('DEBUG'))).lower()
             == 'true',
         'ENV': os.environ.get('ENV', app.config.get('ENV')),
-        'MONGODB_DB':
-            os.environ.get('MONGODB_DB', app.config.get('MONGODB_DB')),
         'MONGODB_HOST':
             os.environ.get('MONGODB_HOST', app.config.get('MONGODB_HOST')),
-        'MONGODB_PASSWORD':
-            os.environ.get('MONGODB_PASSWORD',
-                           app.config.get('MONGODB_PASSWORD')),
-        'MONGODB_PORT':
-            int(os.environ.get('MONGODB_PORT',
-                               app.config.get('MONGODB_PORT'))),
-        'MONGODB_USERNAME':
-            os.environ.get('MONGODB_USERNAME',
-                           app.config.get('MONGODB_USERNAME')),
         'SECRET_KEY':
             os.environ.get('SECRET_KEY', app.config.get('SECRET_KEY')),
         'SERVER_NAME':

@@ -1,0 +1,8 @@
+[run]
+source=urlshortener
+parallel=True
+
+[paths]
+source=
+  urlshortener/
+  /opt/app/urlshortener/

@@ -10,10 +10,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
       - name: Test
         run: |
           docker build --target test -t test .
           docker run test
+      - name: Extract Coverage
+        run: |
+          docker cp $(docker ps -l -q):/opt/app/.coverage .coverage.tmp
+          pip install coverage
+          coverage combine
+          coverage xml
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
   Deploy:
     if: ${{ github.event_name == 'push' }}
     needs: Test

@@ -1,8 +1,8 @@
 # URL Shortener
 
 [![Latest Release](https://img.shields.io/github/release/vanillaSlice/URLShortener.svg)](https://github.com/vanillaSlice/URLShortener/releases/latest)
-[![Build Status](https://img.shields.io/github/workflow/status/vanillaSlice/URLShortener/CI/master)](https://github.com/vanillaSlice/URLShortener/actions?query=workflow%3A%22CI%22+branch%3Amaster)
-[![Coverage Status](https://img.shields.io/coveralls/github/vanillaSlice/URLShortener/master.svg)](https://coveralls.io/github/vanillaSlice/URLShortener?branch=master)
+[![Build Status](https://img.shields.io/github/workflow/status/vanillaSlice/URLShortener/CI/master)](https://github.com/vanillaSlice/URLShortener/actions?query=workflow%3ACI+branch%3Amaster)
+[![Coverage Status](https://img.shields.io/codecov/c/gh/vanillaSlice/URLShortener/master)](https://codecov.io/gh/vanillaSlice/URLShortener/branch/master)
 [![License](https://img.shields.io/github/license/vanillaSlice/URLShortener.svg)](LICENSE)
 
 A simple URL shortener built with [Flask](http://flask.pocoo.org/) and [MongoDB](https://www.mongodb.com/).

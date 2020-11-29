@@ -1,4 +1,3 @@
-coveralls==2.2.0
 flake8==3.8.4
 mongomock==3.21.0
 pytest==6.1.2

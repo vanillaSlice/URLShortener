@@ -48,7 +48,7 @@ jobs:
           RELEASES=$(curl -n -s https://api.heroku.com/apps/${{ secrets.HEROKU_APP_NAME }}/releases \
             -H "Accept: application/vnd.heroku+json; version=3" \
             -H "Authorization: Bearer ${{ secrets.HEROKU_API_KEY }}")
-          LAST_VERSION=$(echo ${RELEASES}| jq -r .[-2].id)
+          LAST_VERSION=$(echo ${RELEASES} | jq -r .[-2].id)
           PAYLOAD='{"release": "'"${LAST_VERSION}"'"}'
           curl -n -X POST https://api.heroku.com/apps/${{ secrets.HEROKU_APP_NAME }}/releases \
             -H "Accept: application/vnd.heroku+json; version=3" \

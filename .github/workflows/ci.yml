@@ -22,16 +22,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Deploy
+        uses: jctaveras/heroku-deploy@v1.0.0
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          docker login --username=_ --password="$HEROKU_API_KEY" registry.heroku.com
-          docker build -t registry.heroku.com/sliceurl/web -f ./docker/Dockerfile .
-          docker push registry.heroku.com/sliceurl/web
-          IMAGE_ID=$(docker inspect registry.heroku.com/sliceurl/web --format={{.Id}})
-          PAYLOAD='{"updates":[{"type":"web","docker_image":"'"${IMAGE_ID}"'"}]}'
-          curl -n -X PATCH https://api.heroku.com/apps/sliceurl/formation \
-               -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
-               -H "Authorization: Bearer $HEROKU_API_KEY" \
-               -H "Content-Type: application/json" \
-               -d "${PAYLOAD}"
+        with:
+          api_key: ${{ secrets.HEROKU_API_KEY }}
+          app_name: ${{ secrets.HEROKU_APP_NAME }}
+          dockerfile_path: docker/
+          email: ${{ secrets.HEROKU_EMAIL }}

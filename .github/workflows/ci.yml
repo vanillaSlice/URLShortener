@@ -5,18 +5,18 @@ on:
   push:
     branches: master
 jobs:
-  build:
+  Test:
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
         run: |
-          docker build -t test -f ./docker/test.Dockerfile .
+          docker build --target test -t test .
           docker run test
-  deploy:
-    if: ${{ github.ref == 'refs/heads/master' }}
-    needs: build
+  Deploy:
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,8 +28,8 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           usedocker: true
-  e2e:
-    needs: deploy
+  E2E:
+    needs: Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,7 +48,7 @@ jobs:
           RELEASES=$(curl -n -s https://api.heroku.com/apps/${{ secrets.HEROKU_APP_NAME }}/releases \
             -H "Accept: application/vnd.heroku+json; version=3" \
             -H "Authorization: Bearer ${{ secrets.HEROKU_API_KEY }}")
-          LAST_VERSION=$(echo ${RELEASES} | jq -r .[-2].id)
+          LAST_VERSION=$(echo "${RELEASES}" | jq -r .[-2].id)
           PAYLOAD='{"release": "'"${LAST_VERSION}"'"}'
           curl -n -X POST https://api.heroku.com/apps/${{ secrets.HEROKU_APP_NAME }}/releases \
             -H "Accept: application/vnd.heroku+json; version=3" \

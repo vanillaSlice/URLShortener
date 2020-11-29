@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "E2E Tests",
   "scripts": {
+    "open": "cypress open -P e2e_tests",
     "test": "cypress run -P e2e_tests"
   },
   "author": "Michael Lowe",

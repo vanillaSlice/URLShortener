@@ -1,1 +1,7 @@
-{}
+{
+  "baseUrl": "https://url.mikelowe.xyz/",
+  "chromeWebSecurity": false,
+  "fixturesFolder": false,
+  "pluginsFile": false,
+  "supportFile": false
+}

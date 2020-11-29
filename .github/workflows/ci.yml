@@ -23,10 +23,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Deploy
         uses: jctaveras/heroku-deploy@v1.0.0
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         with:
           api_key: ${{ secrets.HEROKU_API_KEY }}
           app_name: ${{ secrets.HEROKU_APP_NAME }}
-          dockerfile_path: docker/
+          dockerfile: docker/Dockerfile
           email: ${{ secrets.HEROKU_EMAIL }}

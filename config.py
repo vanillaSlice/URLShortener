@@ -5,6 +5,7 @@ properties as environment variables (note that environment variables
 will take precedence).
 """
 
+
 class Default:
     """
     Default config properties.
@@ -21,6 +22,7 @@ class Default:
     SERVER_NAME = '127.0.0.1:5000'
     SESSION_COOKIE_DOMAIN = '127.0.0.1:5000'
     SSL = True
+
 
 class Test:
     """

@@ -1,9 +1,9 @@
 {
-  "name": "e2e-tests",
+  "name": "e2e_tests",
   "version": "1.0.0",
   "description": "E2E Tests",
   "scripts": {
-    "test": "cypress run -P e2e-tests"
+    "test": "cypress run -P e2e_tests"
   },
   "author": "Michael Lowe",
   "license": "MIT",

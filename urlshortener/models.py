@@ -4,6 +4,7 @@ Exports URL Shortener app data models.
 
 from mongoengine import Document, SequenceField, URLField
 
+
 class URLEntry(Document):
     """
     URL entry used in database.

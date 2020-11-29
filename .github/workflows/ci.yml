@@ -35,13 +35,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Sleep
-        uses: jakejarvis/wait-action@master
+        uses: juliangruber/sleep-action@v1
         with:
           time: 60s
       - name: Test
         uses: cypress-io/github-action@v2
         with:
-          project: ./e2e-tests
+          project: ./e2e_tests
       - name: Rollback
         if: failure()
         run: |

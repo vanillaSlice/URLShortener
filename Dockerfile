@@ -1,15 +1,17 @@
 FROM python:3.9.0-alpine AS base
 WORKDIR /opt/app
-COPY ./requirements.txt ./requirements.txt
-COPY ./urlshortener ./urlshortener
 COPY ./config.py ./config.py
+COPY ./requirements.txt ./requirements.txt
 COPY ./run.py ./run.py
+COPY ./urlshortener ./urlshortener
 RUN pip install -r requirements.txt
 
 FROM base as test
-COPY . .
+COPY ./pytest.ini ./pytest.ini
+COPY ./requirements-test.txt ./requirements-test.txt
+COPY ./unit_tests ./unit_tests
 RUN pip install -r requirements-test.txt
-CMD pylint urlshortener/ && pytest --cov urlshortener/ --cov-fail-under=90
+CMD flake8 && pytest
 
 FROM base as local
 CMD gunicorn --bind=0.0.0.0:8000 --workers=4 --reload --preload run:app

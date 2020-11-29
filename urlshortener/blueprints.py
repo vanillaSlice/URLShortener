@@ -4,13 +4,20 @@ Exports URL Shortener app blueprints.
 
 import re
 
-from flask import abort, Blueprint, current_app, jsonify, redirect, render_template, request
+from flask import (abort,
+                   Blueprint,
+                   current_app,
+                   jsonify,
+                   redirect,
+                   render_template,
+                   request)
 from hashids import Hashids
 from mongoengine.errors import ValidationError
 
 from urlshortener.models import URLEntry
 
 home = Blueprint('home', __name__, url_prefix='/')
+
 
 @home.route('/')
 def index():
@@ -20,6 +27,7 @@ def index():
 
     return render_template('home.html')
 
+
 @home.route('/new/<path:path>')
 def new_url(path):
     """
@@ -27,9 +35,11 @@ def new_url(path):
     """
 
     request_path = '{}/new/'.format(request.url_root)
-    request_url_index_start = request.url.find(request_path) + len(request_path)
+    request_url_index_start = \
+        request.url.find(request_path) + len(request_path)
     request_url = request.url[request_url_index_start:].strip()
-    request_url_without_prefixes = re.sub(r'^(http(s)?://)?(www.)?', '', request_url)
+    request_url_without_prefixes = \
+        re.sub(r'^(http(s)?://)?(www.)?', '', request_url)
 
     server_name = current_app.config.get('SERVER_NAME')
 
@@ -52,7 +62,11 @@ def new_url(path):
     hashids = Hashids(current_app.config['SECRET_KEY'])
     encoded_sequence = hashids.encode(url_entry.sequence)
 
-    return jsonify({'original_url': request_url, 'short_url': app_url + encoded_sequence}), 200
+    return jsonify({
+        'original_url': request_url,
+        'short_url': app_url + encoded_sequence
+    }), 200
+
 
 @home.route('/<hashed_id>')
 def go_to_url(hashed_id):

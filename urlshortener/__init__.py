@@ -15,6 +15,7 @@ assets = Environment()
 
 mongoengine = MongoEngine()
 
+
 def create_app(testing=False):
     """
     Creates an instance of the URL Shortener app.
@@ -36,18 +37,32 @@ def create_app(testing=False):
 
     # load environment variables (if present)
     app.config.update({
-        'DEBUG': os.environ.get('DEBUG', str(app.config.get('DEBUG'))).lower() == 'true',
+        'DEBUG':
+            os.environ.get('DEBUG', str(app.config.get('DEBUG'))).lower()
+            == 'true',
         'ENV': os.environ.get('ENV', app.config.get('ENV')),
-        'MONGODB_DB': os.environ.get('MONGODB_DB', app.config.get('MONGODB_DB')),
-        'MONGODB_HOST': os.environ.get('MONGODB_HOST', app.config.get('MONGODB_HOST')),
-        'MONGODB_PASSWORD': os.environ.get('MONGODB_PASSWORD', app.config.get('MONGODB_PASSWORD')),
-        'MONGODB_PORT': int(os.environ.get('MONGODB_PORT', app.config.get('MONGODB_PORT'))),
-        'MONGODB_USERNAME': os.environ.get('MONGODB_USERNAME', app.config.get('MONGODB_USERNAME')),
-        'SECRET_KEY': os.environ.get('SECRET_KEY', app.config.get('SECRET_KEY')),
-        'SERVER_NAME': os.environ.get('SERVER_NAME', app.config.get('SERVER_NAME')),
+        'MONGODB_DB':
+            os.environ.get('MONGODB_DB', app.config.get('MONGODB_DB')),
+        'MONGODB_HOST':
+            os.environ.get('MONGODB_HOST', app.config.get('MONGODB_HOST')),
+        'MONGODB_PASSWORD':
+            os.environ.get('MONGODB_PASSWORD',
+                           app.config.get('MONGODB_PASSWORD')),
+        'MONGODB_PORT':
+            int(os.environ.get('MONGODB_PORT',
+                               app.config.get('MONGODB_PORT'))),
+        'MONGODB_USERNAME':
+            os.environ.get('MONGODB_USERNAME',
+                           app.config.get('MONGODB_USERNAME')),
+        'SECRET_KEY':
+            os.environ.get('SECRET_KEY', app.config.get('SECRET_KEY')),
+        'SERVER_NAME':
+            os.environ.get('SERVER_NAME', app.config.get('SERVER_NAME')),
         'SESSION_COOKIE_DOMAIN':
-            os.environ.get('SESSION_COOKIE_DOMAIN', app.config.get('SESSION_COOKIE_DOMAIN')),
-        'SSL': os.environ.get('SSL', str(app.config.get('SSL'))).lower() == 'true'
+            os.environ.get('SESSION_COOKIE_DOMAIN',
+                           app.config.get('SESSION_COOKIE_DOMAIN')),
+        'SSL':
+            os.environ.get('SSL', str(app.config.get('SSL'))).lower() == 'true'
     })
 
     # set version
@@ -83,7 +98,8 @@ def create_app(testing=False):
     if app.debug:
         @app.after_request
         def after_request(response):
-            response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+            response.headers['Cache-Control'] = \
+                'no-cache, no-store, must-revalidate'
             response.headers['Expires'] = 0
             response.headers['Pragma'] = 'no-cache'
             return response

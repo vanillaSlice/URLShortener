@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "E2E Tests",
   "scripts": {
-    "test": "cypress run"
+    "test": "cypress run -P e2e-tests"
   },
   "author": "Michael Lowe",
   "license": "MIT",

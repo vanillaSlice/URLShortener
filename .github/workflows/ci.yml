@@ -29,13 +29,23 @@ jobs:
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           usedocker: true
   e2e:
-    if: ${{ github.ref == 'refs/heads/master' }}
     needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Cypress run
+      - name: Test
         uses: cypress-io/github-action@v2
         with:
           project: ./e2e-tests
+      - name: Rollback
+        if: failure()
+        run: |
+          LAST_VERSION=$(curl -n -s https://api.heroku.com/apps/${{ secrets.HEROKU_APP_NAME }}/releases \
+            -H "Accept: application/vnd.heroku+json; version=3" | jq -r .[-2].id)
+          PAYLOAD='{"release": "'"${LAST_VERSION}"'"}'
+          curl -n -X POST https://api.heroku.com/apps/${{ secrets.HEROKU_APP_NAME }}/releases \
+            -H "Accept: application/vnd.heroku+json; version=3" \
+            -H "Authorization: Bearer ${{ secrets.HEROKU_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d "${PAYLOAD}"

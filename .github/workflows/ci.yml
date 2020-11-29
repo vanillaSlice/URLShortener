@@ -56,6 +56,10 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           project: ./e2e_tests
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Rollback
         if: failure()
         run: |

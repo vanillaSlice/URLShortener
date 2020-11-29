@@ -8,3 +8,5 @@ build
 instance/*
 !instance/config-example.py
 mongodb/data
+node_modules
+videos

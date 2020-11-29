@@ -9,9 +9,9 @@ RUN pip install -r requirements.txt
 FROM base as test
 COPY ./.coveragerc ./.coveragerc
 COPY ./pytest.ini ./pytest.ini
-COPY ./requirements-test.txt ./requirements-test.txt
+COPY ./test-requirements.txt ./test-requirements.txt
 COPY ./unit_tests ./unit_tests
-RUN pip install -r requirements-test.txt
+RUN pip install -r test-requirements.txt
 CMD flake8 && pytest
 
 FROM base as local

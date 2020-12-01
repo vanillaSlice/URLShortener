@@ -4,7 +4,8 @@
   "description": "E2E Tests",
   "scripts": {
     "open": "cypress open -P e2e_tests",
-    "test": "cypress run -P e2e_tests"
+    "test": "cypress run -P e2e_tests",
+    "test:update-snapshots": "npm run test -- -e type=base"
   },
   "author": "Michael Lowe",
   "repository": {
@@ -13,6 +14,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "cypress": "6.0.1"
+    "cypress": "6.0.1",
+    "cypress-visual-regression": "1.5.5"
   }
 }

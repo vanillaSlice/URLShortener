@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const VISUAL_REGRESSION_THRESHOLD = 0.05
+const VISUAL_REGRESSION_THRESHOLD = 0.1
 
 context('E2E', () => {
   it('renders page', () => {

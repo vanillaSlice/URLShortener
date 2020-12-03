@@ -15,6 +15,6 @@
   "license": "MIT",
   "devDependencies": {
     "cypress": "6.0.1",
-    "cypress-visual-regression": "1.5.5"
+    "cypress-visual-regression": "1.5.6"
   }
 }

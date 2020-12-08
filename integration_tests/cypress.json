@@ -1,0 +1,12 @@
+{
+  "baseUrl": "http://127.0.0.1:5000/",
+  "chromeWebSecurity": false,
+  "env": {
+    "failSilently": false,
+    "type": "actual"
+  },
+  "fixturesFolder": false,
+  "projectId": "v5n76h",
+  "screenshotsFolder": "./cypress/snapshots/actual",
+  "trashAssetsBeforeRuns": true
+}

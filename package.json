@@ -1,11 +1,13 @@
 {
-  "name": "e2e-tests",
+  "name": "ui-tests",
   "version": "1.0.0",
-  "description": "E2E Tests",
+  "description": "UI Tests",
   "scripts": {
-    "open": "cypress open -P e2e_tests",
-    "test": "cypress run -P e2e_tests",
-    "test:update-snapshots": "npm run test -- -e type=base"
+    "open:integration": "cypress open -P integration_tests",
+    "test:integration": "cypress run -P integration_tests",
+    "test:integration:snapshots": "npm run test:integration -- -e type=base",
+    "open:e2e": "cypress open -P e2e_tests",
+    "test:e2e": "cypress run -P e2e_tests"
   },
   "author": "Michael Lowe",
   "repository": {

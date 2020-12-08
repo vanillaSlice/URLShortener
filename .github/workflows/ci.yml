@@ -5,7 +5,7 @@ on:
   push:
     branches: master
 jobs:
-  Test:
+  UnitTest:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,9 +28,27 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: true
+  IntegrationTest:
+    needs: UnitTest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run Docker Compose
+        run: |
+          docker-compose up -d
+      - name: Test
+        uses: cypress-io/github-action@v2
+        with:
+          project: ./integration_tests
+          record: true
+          tag: Integration
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   Deploy:
     if: ${{ github.event_name == 'push' }}
-    needs: Test
+    needs: IntegrationTest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -57,6 +75,7 @@ jobs:
         with:
           project: ./e2e_tests
           record: true
+          tag: E2E
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

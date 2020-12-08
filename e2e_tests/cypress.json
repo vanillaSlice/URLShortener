@@ -1,12 +1,8 @@
 {
   "baseUrl": "https://url.mikelowe.xyz/",
   "chromeWebSecurity": false,
-  "env": {
-    "failSilently": false,
-    "type": "actual"
-  },
   "fixturesFolder": false,
+  "pluginsFile": false,
   "projectId": "v5n76h",
-  "screenshotsFolder": "./cypress/snapshots/actual",
-  "trashAssetsBeforeRuns": true
+  "supportFile": false
 }

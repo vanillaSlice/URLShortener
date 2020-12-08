@@ -4,5 +4,8 @@
   "fixturesFolder": false,
   "pluginsFile": false,
   "projectId": "v5n76h",
+  "retries": {
+    "runMode": 2
+  },
   "supportFile": false
 }

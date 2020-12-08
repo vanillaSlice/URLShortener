@@ -7,6 +7,9 @@
   },
   "fixturesFolder": false,
   "projectId": "v5n76h",
+  "retries": {
+    "runMode": 2
+  },
   "screenshotsFolder": "./cypress/snapshots/actual",
   "trashAssetsBeforeRuns": true
 }

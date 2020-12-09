@@ -54,7 +54,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Deploy
-        uses: akhileshns/heroku-deploy@v3.6.8
+        uses: akhileshns/heroku-deploy@v3.7.8
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}

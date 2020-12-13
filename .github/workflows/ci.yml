@@ -60,7 +60,7 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           usedocker: true
-  E2E:
+  E2ETest:
     needs: Deploy
     runs-on: ubuntu-latest
     steps:

@@ -1,4 +1,4 @@
 flake8==3.8.4
-mongomock==3.21.0
+mongomock==3.22.0
 pytest==6.2.1
 pytest-cov==2.10.1

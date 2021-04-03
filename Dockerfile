@@ -1,4 +1,4 @@
-FROM python:3.9.2-alpine AS base
+FROM python:3.9.3-alpine AS base
 WORKDIR /opt/app
 COPY ./config.py ./config.py
 COPY ./requirements.txt ./requirements.txt
